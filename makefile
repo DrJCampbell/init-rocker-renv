@@ -15,26 +15,22 @@ ROCKER_LINK=rockerimage.sif
 
 build:
 
-R_runscript:
-ifeq (,$(wildcard ./R-rocker))
-	cat R-tmp | sed -e "s|RENV_PATHS_ROOT=\[set path\]|RENV_PATHS_ROOT=$(RENV_PATHS_ROOT)|" > R-rocker
+R_runscript: R-rocker
+	cat R-tmp | sed -e "s|RENV_PATHS_ROOT=\[set path\]|RENV_PATHS_ROOT=$(RENV_PATHS_ROOT)|" > $@
+	chmod 700 $@
 	rm R-tmp
-endif
 
 #.PHONY: init_renv
-init_renv:
-ifeq (,$(wildcard ./renv))
+init_renv: renv
 	singularity exec \
 	--bind ${PROJECT_PATH},${RENV_PATHS_ROOT},${TMP} \
 	--pwd ${PROJECT_PATH} \
 	--containall \
 	--cleanenv \
 	./${ROCKER_LINK} R -e ".libPaths( \"${R_LIBS_PROJECT}\" );renv::init();renv::restore();q( save = \"no\")"
-endif
 
 .PHONY: install_renv
-install_renv:
-ifeq (,$(wildcard ${R_LIBS_PROJECT}/renv))
+install_renv: $(R_LIBS_PROJECT)/renv
 	@mkdir -p ${R_LIBS_PROJECT}
 	singularity exec \
 	--bind ${PROJECT_PATH},${TMP} \
@@ -42,25 +38,20 @@ ifeq (,$(wildcard ${R_LIBS_PROJECT}/renv))
 	--containall \
 	--cleanenv \
 	./${ROCKER_LINK} R -e ".libPaths( \"${R_LIBS_PROJECT}\" );install.packages( \"renv\" );q( save = \"no\")"
-endif
 
 .PHONY: renv
-renv:
-ifeq (,$(wildcard ./.Renviron))
-	@echo "# maintain separability within the cache" > .Renviron
-	@echo "RENV_PATHS_PREFIX=$(RENV_PATHS_PREFIX)" >> .Renviron
-	@echo "# but do use the cache!" >> .Renviron
-	@echo "RENV_PATHS_ROOT=$(RENV_PATHS_ROOT)" >> .Renviron
-	@echo "# ensure that the renv library stays in the project directory" >> .Renviron
-	@echo "RENV_PATHS_LIBRARY=renv/library" >> .Renviron
-	@echo "# Need a temporary system library to install renv right at the start" >> .Renviron
-	@echo "R_LIBS_USER=.tmp_r_lib" >> .Renviron
-endif
+renv: .Renviron
+	@echo "# maintain separability within the cache" > $@
+	@echo "RENV_PATHS_PREFIX=$(RENV_PATHS_PREFIX)" >> $@
+	@echo "# but do use the cache!" >> $@
+	@echo "RENV_PATHS_ROOT=$(RENV_PATHS_ROOT)" >> $@
+	@echo "# ensure that the renv library stays in the project directory" >> $@
+	@echo "RENV_PATHS_LIBRARY=renv/library" >> $@
+	@echo "# Need a temporary system library to install renv right at the start" >> $@
+	@echo "R_LIBS_USER=.tmp_r_lib" >> $@
 
 .PHONY: rocker
-rocker:
-ifeq (,$(wildcard ./${rocker_image_file}))
+rocker: $(rocker_image_file)
 	module load Singularity/3.6.4;
 	singularity pull ${rocker_image_uri}
-	ln $(rocker_image_file) ${ROCKER_LINK}
-endif
+	ln $@ ${ROCKER_LINK}
