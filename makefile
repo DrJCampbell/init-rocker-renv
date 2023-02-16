@@ -17,7 +17,7 @@ build:
 
 R_runscript:
 ifeq (,$(wildcard ./R-rocker))
-	cat R-tmp | sed -e "s|RENV_PATHS_ROOT=\[set path\]|RENV_PATHS_ROOT=$RENV_PATHS_ROOT|" > R-rocker
+	cat R-tmp | sed -e "s|RENV_PATHS_ROOT=\[set path\]|RENV_PATHS_ROOT=$(RENV_PATHS_ROOT)|" > R-rocker
 	rm R-tmp
 endif
 
@@ -29,7 +29,7 @@ ifeq (,$(wildcard ./renv))
 	--pwd ${PROJECT_PATH} \
 	--containall \
 	--cleanenv \
-	./${ROCKER_LINK} R -e ".libPaths( \"${R_LIBS_PROJECT}\" )renv::init();renv::restore();q( save = \"no\")"
+	./${ROCKER_LINK} R -e ".libPaths( \"${R_LIBS_PROJECT}\" );renv::init();renv::restore();q( save = \"no\")"
 endif
 
 .PHONY: install_renv
