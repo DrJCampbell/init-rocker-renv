@@ -14,6 +14,7 @@ TMP=/tmp
 ROCKER_LINK=rockerimage.sif
 
 build:
+	rocker renv install_renv init_renv R_runscript
 
 R_runscript: R-rocker
 	cat R-tmp | sed -e "s|RENV_PATHS_ROOT=\[set path\]|RENV_PATHS_ROOT=$(RENV_PATHS_ROOT)|" > $@
