@@ -13,7 +13,7 @@ PROJECT_PATH=$(shell readlink -f ${PWD})
 TMP=/tmp
 ROCKER_LINK=rockerimage.sif
 
-build: rocker renv install_renv init_renv R_runscript
+build: R_runscript init_renv install_renv renv rocker
 
 R_runscript: R-rocker
 	cat R-tmp | sed -e "s|RENV_PATHS_ROOT=\[set path\]|RENV_PATHS_ROOT=$(RENV_PATHS_ROOT)|" > $@
