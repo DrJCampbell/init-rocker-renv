@@ -16,12 +16,16 @@ ROCKER_LINK=rockerimage.sif
 build: R_runscript init_renv install_renv renv rocker
 
 R_runscript: R-rocker
+
+R-rocker:
 	cat R-tmp | sed -e "s|RENV_PATHS_ROOT=\[set path\]|RENV_PATHS_ROOT=$(RENV_PATHS_ROOT)|" > $@
 	chmod 700 $@
 	rm R-tmp
 
 #.PHONY: init_renv
 init_renv: renv
+
+renv:
 	singularity exec \
 	--bind ${PROJECT_PATH},${RENV_PATHS_ROOT},${TMP} \
 	--pwd ${PROJECT_PATH} \
@@ -31,6 +35,8 @@ init_renv: renv
 
 .PHONY: install_renv
 install_renv: $(R_LIBS_PROJECT)/renv
+
+$(R_LIBS_PROJECT)/renv:
 	@mkdir -p ${R_LIBS_PROJECT}
 	singularity exec \
 	--bind ${PROJECT_PATH},${TMP} \
@@ -41,6 +47,8 @@ install_renv: $(R_LIBS_PROJECT)/renv
 
 .PHONY: renv
 renv: .Renviron
+
+.Renviron:
 	@echo "# maintain separability within the cache" > $@
 	@echo "RENV_PATHS_PREFIX=$(RENV_PATHS_PREFIX)" >> $@
 	@echo "# but do use the cache!" >> $@
