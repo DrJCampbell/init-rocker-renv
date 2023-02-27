@@ -52,6 +52,8 @@ renv: .Renviron
 
 .PHONY: rocker
 rocker: $(rocker_image_file)
+	
+$(rocker_image_file):
 	module load Singularity/3.6.4;
 	singularity pull ${rocker_image_uri}
 	ln $@ ${ROCKER_LINK}
