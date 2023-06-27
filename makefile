@@ -13,7 +13,7 @@ PROJECT_PATH=$(shell readlink -f ${PWD})
 TMP=/tmp
 ROCKER_LINK=rockerimage.sif
 
-build: R_runscript init_renv install_renv renv rocker
+build: rocker renv install_renv init_renv R_runscript
 
 R_runscript: R-rocker
 
@@ -23,9 +23,9 @@ R-rocker:
 	rm R-tmp
 
 #.PHONY: init_renv
-init_renv: renv
+#init_renv: renv
 
-renv:
+init_renv:
 	singularity exec \
 	--bind ${PROJECT_PATH},${RENV_PATHS_ROOT},${TMP} \
 	--pwd ${PROJECT_PATH} \
