@@ -43,7 +43,7 @@ elif [ -e $1 ]; then
                 --pwd ${PROJECT_PATH} \
                 --containall \
                 --cleanenv \
-                ./rockerimage.sif Rscript ${params} $1
+                ./rockerimage.sif Rscript ${params} $@
 else
     singularity exec \
                 --bind ${PROJECT_PATH},${RENV_PATHS_ROOT},${TMP} \
