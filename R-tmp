@@ -2,12 +2,18 @@
 
 PROJECT_PATH=`readlink -f $PWD`
 RENV_PATHS_ROOT=[set path]
+ADDITIONAL_PATHS=[set path]
 TMP=/tmp
+
+MOUNTS=${PROJECT_PATH},${RENV_PATHS_ROOT},${TMP}
+if [ ! -z "$ADDITIONAL_PATHS" ]; then
+	MOUNTS=$MOUNTS,$ADDITIONAL_PATHS
+fi
 
 module load Singularity/3.6.4;
 
 print_help ( ) {
-    echo "USAGE: R-rock -p [command line option string to R] [R script file]\n\n"
+    echo "USAGE: R-rocker -p [command line option string to R] [R script file]\n\n"
     echo " * Running R-rocker with no commandline parameters will give you an R shell."
     echo " * Specifying an R script file will run Rscript."
     echo " * Use the -p flag to define the command line argument string to pass to either Rscript or R."
@@ -25,28 +31,28 @@ done
 
 if [ -z ${1+x} ]; then
      singularity exec \
-                --bind ${PROJECT_PATH},${RENV_PATHS_ROOT},${TMP} \
+                --bind ${MOUNTS} \
                 --pwd ${PROJECT_PATH} \
                 --containall \
                 --cleanenv \
                 ./rockerimage.sif R
 elif [ $1 == "container" ]; then
     singularity shell \
-		--bind ${PROJECT_PATH},${RENV_PATHS_ROOT},${TMP} \
+		--bind ${MOUNTS} \
                 --pwd ${PROJECT_PATH} \
                 --containall \
                 --cleanenv \
                 ./rockerimage.sif
 elif [ -e $1 ]; then
     singularity exec \
-                --bind ${PROJECT_PATH},${RENV_PATHS_ROOT},${TMP} \
+                --bind ${MOUNTS} \
                 --pwd ${PROJECT_PATH} \
                 --containall \
                 --cleanenv \
-                ./rockerimage.sif Rscript ${params} $@
+                ./rockerimage.sif Rscript ${params} $1
 else
     singularity exec \
-                --bind ${PROJECT_PATH},${RENV_PATHS_ROOT},${TMP} \
+                --bind ${MOUNTS} \
                 --pwd ${PROJECT_PATH} \
                 --containall \
                 --cleanenv \
