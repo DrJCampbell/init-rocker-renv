@@ -74,7 +74,7 @@ You can make additional file system paths available to the R session by adding t
 
 ### Further reading
 
-* [renv documentation] for details on configuring renv
+* [renv documentation](https://rstudio.github.io/renv/articles/renv.html) for details on configuring renv
 * [Rocker](https://rocker-project.org/) for image and R details
 * [Singularity user guide](https://docs.sylabs.io/guides/3.5/user-guide/)
 * [Docker user guide](https://www.docker.com/)
