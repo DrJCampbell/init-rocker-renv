@@ -11,6 +11,6 @@ This repo contains a make file and associated scripts and documentation to setup
   + To build and delpoy the environment to a different directory type `make build RHOME=[target direcory]`
 
 ```git@github.com:phileastbioinf/init-rocker-renv.git
-`make build RHOME=".."```
+make build RHOME=".."```
 
 
