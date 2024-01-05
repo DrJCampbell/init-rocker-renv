@@ -34,8 +34,20 @@ make build RHOME=".."
 4. Run `renv::init()` and `renv::restore()` to setup renv environment
 5. Find and expand all symbolic links in the current tree that point outside of it. These paths are mounted when the container starts.
 6. Write `R-rocker` script to run instances of R
+7. Deply the environment if `RHOME` has been set
 
 ### Running R
+
+You can run R via the `R-rocker` scripts
+`./R-rocker -h` will give you the following help.
+
+```
+USAGE: R-rocker -p [command line option string to R] [R script file]
+* Running R-rocker with no commandline parameters will give you an R shell."
+* Specifying an R script file will run Rscript."
+* Use the -p flag to define the command line argument string to pass to either Rscript or R."
+* Run 'R-rocker container' to get a singularlity shell."
+```
 
 ### Bespoke environments
 
