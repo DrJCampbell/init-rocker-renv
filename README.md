@@ -11,7 +11,7 @@ This repo contains a make file and associated scripts and documentation to setup
   + To build and delpoy the environment to a different directory type `make build RHOME=[target direcory]`
 
 > [!IMPORTANT]
-> An install of [Singularity](https://github.com/sylabs/singularity/releases) is required to run the [Rocker](https://rocker-project.org/) [Docker](https://www.docker.com/) container.
+> An install of [Singularity](https://github.com/sylabs/singularity/releases) is required to run the [Rocker](https://rocker-project.org/) [Docker](https://www.docker.com/) container. The command to run singularity can be specficied by setting the `singularity_command` variable in `config.mk'
 
 ### ssh
 ```
@@ -36,6 +36,14 @@ USAGE: R-rocker -p [command line option string to R] [R script file]
 * Run 'R-rocker container' to get a singularlity shell."
 ```
 
+### Container image flavours and R versions
+
+[Rocker](https://rocker-project.org/) offers a number fo different container falvours designed for specifc analysis types along with different versions of R. The specific image/R-version combination can be set in the `config.mk` file. Please see rocker's [image](https://rocker-project.org/images/) list for availabel combinations and names. 
+```
+rocker_image=verse
+R_version=4.2.2
+```
+
 ## Details
 
 ### The Process
@@ -50,7 +58,11 @@ USAGE: R-rocker -p [command line option string to R] [R script file]
 
 ### Bespoke environments
 
+The repo contains a fairly generic `renv.lock`  that contains common pacakges along with a Seurat v5 install. If you would like to work with a custom enviroment replace this `renv.lock` with your own prior to building the enviroment. Alternativly you can reconfgiure the environment via renv post setup. Please see the [renv](https://rstudio.github.io/renv/articles/renv.html) documentation for details.
+
 ### Configuration options
+
+All configuration options are contained in `config.mk`.
 
 ### Mounting new paths
 
