@@ -67,7 +67,7 @@ The repo contains a fairly generic `renv.lock`  that contains common pacakges al
 
 All configuration options are contained in `config.mk`.
 
-### Mounting new paths
+### Mounting additional paths
 
 You can make additional file system paths available to the R session by adding them to the `ADDITIONAL_PATHS` variable in the `R-rocker` script.
 `ADDITIONAL_PATHS="/additional/path/one,additiona/path/two"`
