@@ -26,7 +26,24 @@ make build RHOME=".."
 
 ## Details
 
-The process is as follows:
+### The Process
 
-1. 
+1. Download and convert Rocker Docker container to singularity container
+2. Write local `.Renviron` file
+3. Run R within the container and install renv to a temporary local R library path (default `.tmp_r_lib`)
+4. Run `renv::init()` and `renv::restore()` to setup renv environment
+5. Find and expand all symbolic links in the current tree that point outside of it. These paths are mounted when the container starts.
+6. Write `R-rocker` script to run instances of R
+
+### Running R
+
+### Bespoke environments
+
+### Configuration options
+
+### Mounting new paths
+
+### Further reading
+
+
 
