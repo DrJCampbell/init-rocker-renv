@@ -5,7 +5,7 @@ This repo contains a make file and associated scripts and documentation to setup
 ## Quick start
 
 1. Clone repository
-2. cd to the `init-rocker-renv` directory
+2. `cd` to the `init-rocker-renv` directory
 3. Build the R environment
   + To build the environment in the repo diectory type `make build`
   + To build and delpoy the environment to a different directory type `make build RHOME=[target direcory]`
@@ -16,13 +16,16 @@ This repo contains a make file and associated scripts and documentation to setup
 ### ssh
 ```
 git clone git@github.com:phileastbioinf/init-rocker-renv.git
+cd init-rocker-renv
 make build RHOME=".."
 ```
 ### http
 ```
 git clone https://github.com/phileastbioinf/init-rocker-renv.git
+cd init-rocker-renv
 make build RHOME=".."
 ```
+
 ### Running R
 
 You can run R via the `./R-rocker` script.
