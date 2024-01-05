@@ -4,8 +4,8 @@ This repo contains a make file and associated scripts and documentation to setup
 
 ## Quick start
 
-[!IMPORTANT]
-An install of [Singularity](https://github.com/sylabs/singularity/releases) is required to run the [Rocker](https://rocker-project.org/) [Docker](https://www.docker.com/) container.
+> [!IMPORTANT]
+> An install of [Singularity](https://github.com/sylabs/singularity/releases) is required to run the [Rocker](https://rocker-project.org/) [Docker](https://www.docker.com/) container.
 
 1. Clone repository
 2. cd to the `init-rocker-renv` directory
