@@ -1,24 +1,17 @@
 
 ## makefile to configure an R Rocker container with Renv environment
 
+include config.mk
+
 ifndef RHOME
     RHOME=./
 endif
 
 RHOME_FULL=$(shell readlink -f ${RHOME})
-rocker_image=verse
-R_version=4.2.2
 rocker_image_uri=docker://rocker/${rocker_image}:${R_version}
 rocker_image_file=${rocker_image}_${R_version}.sif
-RENV_PATHS_ROOT=/camp/stp/babs/working/software/renv
-RENV_PATHS_PREFIX=rocker
-RENV_PATHS_LIBRARY=renv/library
-R_LIBS_PROJECT=.tmp_r_lib
 BUILD_PATH=$(shell readlink -f ${PWD})
-TMP=/tmp
 ADDITIONAL_PATHS=$(shell ./find-symlinks.sh ${RHOME})
-ROCKER_ALIAS=rockerimage.sif
-
 
 build: rocker renv install_renv init_renv R_runscript
 
@@ -46,7 +39,7 @@ R-rocker:
 #init_renv: renv
 
 init_renv:
-	singularity exec \
+	${singularity_command} exec \
 	--bind ${BUILD_PATH},${RENV_PATHS_ROOT},${TMP} \
 	--pwd ${BUILD_PATH} \
 	--containall \
@@ -58,7 +51,7 @@ install_renv: $(R_LIBS_PROJECT)/renv
 
 $(R_LIBS_PROJECT)/renv:
 	@mkdir -p ${R_LIBS_PROJECT}
-	singularity exec \
+	${singularity_command} exec \
 	--bind ${BUILD_PATH},${TMP} \
 	--pwd ${BUILD_PATH} \
 	--containall \
