@@ -11,7 +11,7 @@ This repo contains a make file and associated scripts and documentation to setup
   + To build and delpoy the environment to a different directory type `make build RHOME=[target direcory]`
 
 > [!IMPORTANT]
-> An install of [Singularity](https://github.com/sylabs/singularity/releases) is required to run the [Rocker](https://rocker-project.org/) [Docker](https://www.docker.com/) container. The command to run singularity can be specficied by setting the `singularity_command` variable in `config.mk'
+> An installation of [Singularity](https://github.com/sylabs/singularity/releases) is required to run the [Rocker](https://rocker-project.org/) [Docker](https://www.docker.com/) container. The command to run singularity can be specficied by setting the `singularity_command` variable in `config.mk`
 
 ### ssh
 ```
@@ -67,7 +67,7 @@ The repo contains a fairly generic `renv.lock`  that contains common pacakges al
 
 All configuration options are contained in `config.mk`.
 
-### Mounting new paths
+### Mounting additional paths
 
 You can make additional file system paths available to the R session by adding them to the `ADDITIONAL_PATHS` variable in the `R-rocker` script.
 `ADDITIONAL_PATHS="/additional/path/one,additiona/path/two"`
