@@ -39,7 +39,7 @@ R-rocker:
 #init_renv: renv
 
 init_renv:
-	${singularity_command} exec \
+	$(singularity_command) exec \
 	--bind ${BUILD_PATH},${RENV_PATHS_ROOT},${TMP} \
 	--pwd ${BUILD_PATH} \
 	--containall \
@@ -75,6 +75,6 @@ renv: .Renviron
 rocker: $(rocker_image_file)
 	
 $(rocker_image_file):
-	singularity pull ${rocker_image_uri}
+	${singularity_command} pull ${rocker_image_uri}
 	ln $@ ${ROCKER_ALIAS}
 	

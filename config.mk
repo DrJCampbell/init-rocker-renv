@@ -1,7 +1,8 @@
-singularity_command = $(call ml Singularity/3.4.2); singularity
+ml = module is-loaded $1 || module load $1
+singularity_command=$(call ml,Singularity/3.6.4); singularity
 
 rocker_image=verse
-R_version=4.2.2
+R_version=4.3.1
 RENV_PATHS_ROOT=/camp/stp/babs/working/software/renv
 RENV_PATHS_PREFIX=rocker
 RENV_PATHS_LIBRARY=renv/library
