@@ -1,11 +1,12 @@
 #! /bin/bash
 
-PROJECT_PATH=`readlink -f $PWD`
+R_HOME=$( dirname $0 )
+BABS_PROJECT_HOME=`readlink -f $PWD`
 RENV_PATHS_ROOT=[set path]
 ADDITIONAL_PATHS=[set path]
 TMP=/tmp
 
-MOUNTS=${PROJECT_PATH},${RENV_PATHS_ROOT},${TMP}
+MOUNTS=${BABS_PROJECT_HOME},${RENV_PATHS_ROOT},${TMP}
 if [ ! -z "$ADDITIONAL_PATHS" ]; then
 	MOUNTS=$MOUNTS,$ADDITIONAL_PATHS
 fi
@@ -35,6 +36,7 @@ if [ -z ${1+x} ]; then
                 --pwd ${PROJECT_PATH} \
                 --containall \
                 --cleanenv \
+		--env BABS_PROJECT_HOME=${BABS_PROJECT_HOME} \
                 ./rockerimage.sif R
 elif [ $1 == "container" ]; then
     singularity shell \
@@ -42,6 +44,7 @@ elif [ $1 == "container" ]; then
                 --pwd ${PROJECT_PATH} \
                 --containall \
                 --cleanenv \
+		--env BABS_PROJECT_HOME=${BABS_PROJECT_HOME} \
                 ./rockerimage.sif
 elif [ -e $1 ]; then
     singularity exec \
@@ -49,6 +52,7 @@ elif [ -e $1 ]; then
                 --pwd ${PROJECT_PATH} \
                 --containall \
                 --cleanenv \
+		--env BABS_PROJECT_HOME=${BABS_PROJECT_HOME} \
                 ./rockerimage.sif Rscript ${params} $1
 else
     singularity exec \
@@ -56,6 +60,7 @@ else
                 --pwd ${PROJECT_PATH} \
                 --containall \
                 --cleanenv \
+		--env BABS_PROJECT_HOME=${BABS_PROJECT_HOME} \
                 ./rockerimage.sif R -e ${params} "$1"
     exit
 fi
