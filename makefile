@@ -45,6 +45,7 @@ init_renv:
 	--containall \
 	--cleanenv \
 	./${ROCKER_ALIAS} R -e ".libPaths( \"${R_LIBS_PROJECT}\" );renv::init();renv::restore();q( save = \"no\")"
+	echo "setwd( Sys.getenv( \"BABS_PROJECT_HOME\" ) )" >> .Rprofile
 
 .PHONY: install_renv
 install_renv: $(R_LIBS_PROJECT)/renv
