@@ -33,7 +33,7 @@ done
 if [ -z ${1+x} ]; then
      singularity exec \
                 --bind ${MOUNTS} \
-                --pwd ${PROJECT_PATH} \
+                --pwd ${BABS_PROJECT_HOME} \
                 --containall \
                 --cleanenv \
 		--env BABS_PROJECT_HOME=${BABS_PROJECT_HOME} \
@@ -41,7 +41,7 @@ if [ -z ${1+x} ]; then
 elif [ $1 == "container" ]; then
     singularity shell \
 		--bind ${MOUNTS} \
-                --pwd ${PROJECT_PATH} \
+                --pwd ${BABS_PROJECT_HOME} \
                 --containall \
                 --cleanenv \
 		--env BABS_PROJECT_HOME=${BABS_PROJECT_HOME} \
@@ -49,7 +49,7 @@ elif [ $1 == "container" ]; then
 elif [ -e $1 ]; then
     singularity exec \
                 --bind ${MOUNTS} \
-                --pwd ${PROJECT_PATH} \
+                --pwd ${BABS_PROJECT_HOME} \
                 --containall \
                 --cleanenv \
 		--env BABS_PROJECT_HOME=${BABS_PROJECT_HOME} \
@@ -57,7 +57,7 @@ elif [ -e $1 ]; then
 else
     singularity exec \
                 --bind ${MOUNTS} \
-                --pwd ${PROJECT_PATH} \
+                --pwd ${BABS_PROJECT_HOME} \
                 --containall \
                 --cleanenv \
 		--env BABS_PROJECT_HOME=${BABS_PROJECT_HOME} \
