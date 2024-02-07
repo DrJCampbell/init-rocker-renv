@@ -23,13 +23,13 @@ R-rocker:
 		sed -e "s|ADDITIONAL_PATHS=\[set path\]|ADDITIONAL_PATHS=${ADDITIONAL_PATHS}|" > $@
 	chmod 700 $@
 	@if [ ${RHOME_FULL} != ${BUILD_PATH} ]; then \
-        	cp R-rocker ${RHOME}; \
+        	mv R-rocker ${RHOME}; \
 		chmod -R 755 renv; \
-		cp -r *renv* ${RHOME}; \
-		cp ${ROCKER_ALIAS} ${RHOME}; \
-		cp .Rprofile ${RHOME}; \
-		cp .Renviron ${RHOME}; \
-		cd ${RHOME}; \
+		mv -r *renv* ${RHOME}; \
+		mv ${ROCKER_ALIAS} ${RHOME}; \
+		mv .Rprofile ${RHOME}; \
+		mv .Renviron ${RHOME}; \
+		mv ${RHOME}; \
 		#@echo "removing ${BUILD_PATH}"; \
 		#rm -rfI ${BUILD_PATH}; \
 	fi
@@ -45,7 +45,7 @@ init_renv:
 	--containall \
 	--cleanenv \
 	./${ROCKER_ALIAS} R -e ".libPaths( \"${R_LIBS_PROJECT}\" );renv::init();renv::restore();q( save = \"no\")"
-	echo "setwd( Sys.getenv( \"BABS_PROJECT_HOME\" ) )" >> .Rprofile
+	#echo "setwd( Sys.getenv( \"BABS_PROJECT_HOME\" ) )" >> .Rprofile
 
 .PHONY: install_renv
 install_renv: $(R_LIBS_PROJECT)/renv
@@ -84,4 +84,4 @@ python_env: $(PYTHON_ENV_HOME)
 
 $(PYTHON_ENV_HOME):
 	mkdir env
-	conda create --prefix=$@ python	
+	${conda_command} create --prefix=$@ python
