@@ -12,8 +12,8 @@ rocker_image_uri=docker://rocker/${rocker_image}:${R_version}
 rocker_image_file=${rocker_image}_${R_version}.sif
 BUILD_PATH=$(shell readlink -f ${PWD})
 ADDITIONAL_PATHS=$(shell ./find-symlinks.sh ${RHOME})
-
-build: rocker renv install_renv init_renv R_runscript
+PYTHON_ENV_HOME=./env
+build: python_env rocker renv install_renv init_renv R_runscript
 
 R_runscript: R-rocker
 
@@ -78,4 +78,10 @@ rocker: $(rocker_image_file)
 $(rocker_image_file):
 	${singularity_command} pull ${rocker_image_uri}
 	ln $@ ${ROCKER_ALIAS}
-	
+
+.PHONY: python_env
+python_env: $(PYTHON_ENV_HOME)
+
+$(PYTHON_ENV_HOME):
+	mkdir env
+	conda create --prefix=$@ python	
