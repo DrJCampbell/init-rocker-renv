@@ -12,15 +12,16 @@ rocker_image_uri=docker://rocker/${rocker_image}:${R_version}
 rocker_image_file=${rocker_image}_${R_version}.sif
 BUILD_PATH=$(shell readlink -f ${PWD})
 ADDITIONAL_PATHS=$(shell ./find-symlinks.sh ${RHOME})
-PYTHON_ENV_HOME=./env
-build: python_env rocker renv install_renv init_renv R_runscript
+PYTHON_ENV_HOME=$(shell readlink -f ./env)
+build: python_env rocker renv install_renv init_renv init_reticulate R_runscript
 
 R_runscript: R-rocker
 
 R-rocker:
 	echo ${RHOME}
 	cat R-tmp | sed -e "s|RENV_PATHS_ROOT=\[set path\]|RENV_PATHS_ROOT=$(RENV_PATHS_ROOT)|" | \
-		sed -e "s|ADDITIONAL_PATHS=\[set path\]|ADDITIONAL_PATHS=${ADDITIONAL_PATHS}|" > $@
+		sed -e "s|ADDITIONAL_PATHS=\[set path\]|ADDITIONAL_PATHS=${ADDITIONAL_PATHS}|" | \
+		sed -e "s|CONDA_INSTALL_HOME=\[set path\]|CONDA_INSTALL_HOME=${CONDA_INSTALL_HOME}|" > $@
 	chmod 700 $@
 	@if [ ${RHOME_FULL} != ${BUILD_PATH} ]; then \
         	mv R-rocker ${RHOME}; \
@@ -37,6 +38,10 @@ R-rocker:
 
 #.PHONY: init_renv
 #init_renv: renv
+
+init_reticulate:
+	@echo "library( reticualte )" >> .Rprofile
+	@echo "use_python( ${PYTHON_ENV_HOME} >> .Rprofile
 
 init_renv:
 	$(singularity_command) exec \
@@ -83,5 +88,4 @@ $(rocker_image_file):
 python_env: $(PYTHON_ENV_HOME)
 
 $(PYTHON_ENV_HOME):
-	mkdir env
-	${conda_command} create --prefix=$@ python
+	${conda_command} create --prefix=$@ -y python remote-kernel
