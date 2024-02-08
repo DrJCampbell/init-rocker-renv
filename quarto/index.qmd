@@ -1,0 +1,68 @@
+---
+title: "Sarek analysis environment"
+author: "philip.east@crick.ac.uk"
+date: 'Compiled: `r format(Sys.time(), "%d %B, %Y @ %H:%M:%S")`'
+format:
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+    code-tools: true
+    code-copy: true
+    tbl-cap-location: bottom
+    toc: true
+    toc-depth: 4
+    toc-expand: true
+---
+
+```{r}
+#| label: init_r
+#| include: false
+
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE )
+knitr::knit_engines$set(python = reticulate::eng_python)
+options(scipen=15)
+```
+
+# R code - Air Quality
+
+[Quarot with R](https://quarto.org/docs/computations/r.html)
+
+```{r}
+#| label: rcode
+
+#| label: fig-airquality
+#| fig-cap: "Temperature and ozone level."
+#| warning: false
+
+library(ggplot2)
+
+ggplot(airquality, aes(Temp, Ozone)) + 
+  geom_point() + 
+  geom_smooth(method = "loess")
+```
+
+# Python code - quarto example
+
+[Quarto with Python](https://quarto.org/docs/computations/python.html)
+
+For a demonstration of a line plot on a polar axis, see @fig-polar.
+
+```{python}
+#| label: fig-polar
+#| fig-cap: "A line plot on a polar axis"
+
+import os
+os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = '/nemo/stp/babs/working/eastp/projects/babs/philip.east/136_software_dev/projects/init-rocker-renv/testing/init-rocker-renv/env/plugins/platforms'
+import numpy as np
+import matplotlib.pyplot as plt
+
+r = np.arange(0, 2, 0.01)
+theta = 2 * np.pi * r
+fig, ax = plt.subplots(
+  subplot_kw = {'projection': 'polar'} 
+)
+ax.plot(theta, r)
+ax.set_rticks([0.5, 1, 1.5, 2])
+ax.grid(True)
+plt.show()
+```

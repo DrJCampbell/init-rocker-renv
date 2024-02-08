@@ -40,8 +40,8 @@ R-rocker:
 #init_renv: renv
 
 init_reticulate:
-	@echo "library( reticualte )" >> .Rprofile
-	@echo "use_python( ${PYTHON_ENV_HOME} >> .Rprofile
+	@echo "library( reticulate )" >> .Rprofile
+	@echo "use_python( \"${PYTHON_ENV_HOME}/bin/python\" ) " >> .Rprofile
 
 init_renv:
 	$(singularity_command) exec \
@@ -88,4 +88,4 @@ $(rocker_image_file):
 python_env: $(PYTHON_ENV_HOME)
 
 $(PYTHON_ENV_HOME):
-	${conda_command} create --prefix=$@ -y python remote-kernel
+	${conda_command} create --prefix=$@ -y python
