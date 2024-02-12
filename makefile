@@ -26,7 +26,7 @@ R-rocker:
 	@if [ ${RHOME_FULL} != ${BUILD_PATH} ]; then \
         	mv R-rocker ${RHOME}; \
 		chmod -R 755 renv; \
-		mv -r *renv* ${RHOME}; \
+		mv *renv* ${RHOME}; \
 		mv ${ROCKER_ALIAS} ${RHOME}; \
 		mv .Rprofile ${RHOME}; \
 		mv .Renviron ${RHOME}; \
