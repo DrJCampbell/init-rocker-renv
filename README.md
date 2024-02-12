@@ -81,8 +81,10 @@ You can make additional file system paths available to the R session by adding t
 
 * [renv documentation](https://rstudio.github.io/renv/articles/renv.html) for details on configuring renv
 * [Rocker](https://rocker-project.org/) for image and R details
+* [Rocker for RSudio-server](https://rocker-project.org/use/singularity.html#slurm-job-script)
 * [Singularity user guide](https://docs.sylabs.io/guides/3.5/user-guide/)
 * [Docker user guide](https://www.docker.com/)
+* [Customising R-rocker containers](https://cloud.sylabs.io/dashboard)
 
 
 
