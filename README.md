@@ -1,6 +1,6 @@
 # Setup R Rocker container with renv
 
-This repo contains a make file and associated scripts and documentation to setup an R analysis environment using a R [Rocker](https://rocker-project.org/) container and [renv](https://rstudio.github.io/renv/articles/renv.html) package environment.
+This repo contains a make file and associated scripts and documentation to setup an R analysis environment using a R [Rocker](https://rocker-project.org/) container, the [renv](https://rstudio.github.io/renv/articles/renv.html) package environment and a Python Conda environment.
 
 ## Quick start
 
@@ -46,6 +46,10 @@ USAGE: R-rocker -p [command line option string to R] [R script file]
 rocker_image=verse
 R_version=4.2.2
 ```
+
+### Python
+
+Python is made available by linking a Python Conda environment to the R-rocker container. This is achieved by setting the PATH environment variable in the container to point `python` to the conda version. Reticulate is also configured so Python can be run from within R. You can specific a pre-existing Python Conda environment by setting the `PYTHON_ENV_PATH=[path to python conda environment]` variable in `config.mk`. This defaults the `env/` in the project directory and is created if it does not exist. 
 
 ## Details
 
