@@ -2,6 +2,7 @@ ml = module is-loaded $1 || module load $1
 singularity_command=$(call ml,Singularity/3.6.4); singularity
 conda_command=$(call ml,Anaconda3/2023.09-0); conda
 CONDA_INSTALL_HOME=/camp/apps/eb/software/Anaconda3
+PYTHON_ENV_HOME=env
 rocker_image=verse
 R_version=4.3.1
 RENV_PATHS_ROOT=/camp/stp/babs/working/software/renv
