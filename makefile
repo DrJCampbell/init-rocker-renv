@@ -12,7 +12,7 @@ rocker_image_uri=docker://rocker/${rocker_image}:${R_version}
 rocker_image_file=${rocker_image}_${R_version}.sif
 BUILD_PATH=$(shell readlink -f ${PWD})
 ADDITIONAL_PATHS=$(shell ./find-symlinks.sh ${RHOME})
-PYTHON_ENV_HOME=$(shell readlink -f ./env)
+
 build: python_env rocker renv install_renv init_renv init_reticulate R_runscript
 
 R_runscript: R-rocker
