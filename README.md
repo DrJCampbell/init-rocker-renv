@@ -57,7 +57,7 @@ R_version=4.2.2
 4. Run `renv::init()` and `renv::restore()` to setup renv environment
 5. Find and expand all symbolic links in the current tree that point outside of it. These paths are mounted when the container starts.
 6. Write `R-rocker` script to run instances of R
-7. Deply the environment if `RHOME` has been set
+7. Deploy the environment if `RHOME` has been set
 
 ### Bespoke environments
 
