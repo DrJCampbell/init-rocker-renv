@@ -59,9 +59,10 @@ Python is made available by linking a Python Conda environment to the R-rocker c
 2. Write local `.Renviron` file
 3. Run R within the container and install renv to a temporary local R library path (default `.tmp_r_lib`)
 4. Run `renv::init()` and `renv::restore()` to setup renv environment
-5. Find and expand all symbolic links in the current tree that point outside of it. These paths are mounted when the container starts.
-6. Write `R-rocker` script to run instances of R
-7. Deploy the environment if `RHOME` has been set
+5. Add `reticulate` configuration to `.Rprofile`
+6. Find and expand all symbolic links in the current tree that point outside of it. These paths are mounted when the container starts.
+7. Write `R-rocker` script to run instances of R
+8. Deploy the environment if `RHOME` has been set
 
 ### Bespoke environments
 
