@@ -1,6 +1,6 @@
 # Setup R Rocker container with renv
 
-This repo contains a make file and associated scripts and documentation to setup an R analysis environment using a R [Rocker](https://rocker-project.org/) container and [renv](https://rstudio.github.io/renv/articles/renv.html) package environment.
+This repo contains a make file and associated scripts and documentation to setup an R analysis environment using a R [Rocker](https://rocker-project.org/) container, the [renv](https://rstudio.github.io/renv/articles/renv.html) package environment and a Python Conda environment.
 
 ## Quick start
 
@@ -47,6 +47,10 @@ rocker_image=verse
 R_version=4.2.2
 ```
 
+### Python
+
+Python is made available by linking a Python Conda environment to the R-rocker container. This is achieved by setting the PATH environment variable in the container to point `python` to the conda version. Reticulate is also configured so Python can be run from within R. You can specific a pre-existing Python Conda environment by setting the `PYTHON_ENV_PATH=[path to python conda environment]` variable in `config.mk`. This defaults the `env/` in the project directory and is created if it does not exist. 
+
 ## Details
 
 ### The Process
@@ -55,9 +59,10 @@ R_version=4.2.2
 2. Write local `.Renviron` file
 3. Run R within the container and install renv to a temporary local R library path (default `.tmp_r_lib`)
 4. Run `renv::init()` and `renv::restore()` to setup renv environment
-5. Find and expand all symbolic links in the current tree that point outside of it. These paths are mounted when the container starts.
-6. Write `R-rocker` script to run instances of R
-7. Deply the environment if `RHOME` has been set
+5. Add `reticulate` configuration to `.Rprofile`
+6. Find and expand all symbolic links in the current tree that point outside of it. These paths are mounted when the container starts.
+7. Write `R-rocker` script to run instances of R
+8. Deploy the environment if `RHOME` has been set
 
 ### Bespoke environments
 
@@ -76,8 +81,10 @@ You can make additional file system paths available to the R session by adding t
 
 * [renv documentation](https://rstudio.github.io/renv/articles/renv.html) for details on configuring renv
 * [Rocker](https://rocker-project.org/) for image and R details
+* [Rocker for RSudio-server](https://rocker-project.org/use/singularity.html#slurm-job-script)
 * [Singularity user guide](https://docs.sylabs.io/guides/3.5/user-guide/)
 * [Docker user guide](https://www.docker.com/)
+* [Customising R-rocker containers](https://cloud.sylabs.io/dashboard)
 
 
 
