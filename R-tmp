@@ -6,15 +6,23 @@ RENV_PATHS_ROOT=[set path]
 ADDITIONAL_PATHS=[set path]
 CONDA_INSTALL_HOME=[set path]
 
+RSERVER_CORES_DEFAULT=4
+RSERVER_MEM_DEFAULT="50G"
+RSERVER_TIME_DEFAULT="8:00:00"
+
 TMP=/tmp
 PYTHON_PATH=$( readlink -f ${PWD}/env/bin )
 
 MOUNTS=${BABS_PROJECT_HOME},${RENV_PATHS_ROOT},${TMP},${CONDA_INSTALL_HOME}
 if [ ! -z "$ADDITIONAL_PATHS" ]; then
-	MOUNTS=$MOUNTS,$ADDITIONAL_PATHS
+    MOUNTS=$MOUNTS,$ADDITIONAL_PATHS
 fi
 
-SINGULARITY_ENVS="BABS_PROJECT_HOME=${BABS_PROJECT_HOME},PREPEND_PATH=${PYTHON_PATH}"
+if [ $1 != "rstudio" ]; then
+    MOUNTS=${MOUNTS},${TMP}
+fi
+
+export SINGULARITY_ENVS="BABS_PROJECT_HOME=${BABS_PROJECT_HOME},PREPEND_PATH=${PYTHON_PATH}"
 
 module load Singularity/3.6.4;
 
@@ -24,25 +32,49 @@ print_help ( ) {
     echo " * Specifying an R script file will run Rscript."
     echo " * Use the -p flag to define the command line argument string to pass to either Rscript or R."
     echo " * Run 'R-rocker container' to get a singularlity shell."
+    echo " * Run R-rocker rstudio to spin up an rstudio server via slurm sbatch."
+    echo "     * -c [number of cores]"
+    echo "     * -m [memory resource request e.g. 50G]"
+    echo "     * -t [server walltime e.g. 8:00:00 (8 hours)]
     exit
 }
 
-while getopts p:h flag
+while getopts p:c:t:m:h flag
 do
     case "${flag}" in
     	p) params=${OPTARG};;
+	c) RSERVER_CORES=${OPTORG};;
+	t) RSERVER_TIME=${OPTARG};;
+	m) RSERVER_MEM=${OPTARG};;
 	h) print_help
     esac
 done
 
+if [ ${RSERVER_CORES} == "" ]; then
+    RSERVER_CORES=${RSERVER_CORES_DEFAULT}
+fi
+if [ ${RSERVER_TIME} == "" ]; then
+    RSERVER_TIME=${RSERVER_TIME_DEFAULT}
+fi
+if [ ${RSERVER_MEM} == "" ]; then
+    RSERVER_MEM=${RSERVER_MEM_DEFAULT}
+fi
+
 if [ -z ${1+x} ]; then
-     singularity exec \
+    singularity exec \
                 --bind ${MOUNTS} \
                 --pwd ${BABS_PROJECT_HOME} \
                 --containall \
                 --cleanenv \
 		--env ${SINGULARITY_ENVS} \
                 ./rockerimage.sif R
+elif [ $1 == "rstudio" ]; then
+    export SINGULARITY_BIND=${MOUNTS}
+    sbatch \
+    		-c ${RSERVER_CORES} -n 1 \
+    		--time=${RSERVER_TIME} \
+    		--mem=${RSERVER_MEM} \
+    		./run_server.sh
 elif [ $1 == "container" ]; then
     singularity shell \
 		--bind ${MOUNTS} \
