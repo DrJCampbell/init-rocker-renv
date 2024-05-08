@@ -32,11 +32,15 @@ You can run R via the `./R-rocker` script.
 `./R-rocker -h` will give you the following help.
 
 ```
-USAGE: R-rocker -p [command line option string to R] [R script file]
-* Running R-rocker with no commandline parameters will give you an R shell."
-* Specifying an R script file will run Rscript."
-* Use the -p flag to define the command line argument string to pass to either Rscript or R."
-* Run 'R-rocker container' to get a singularlity shell."
+USAGE: R-rocker -p [command line option string to R] [R script file]\n\n
+ * Running R-rocker with no commandline parameters will give you an R shell.
+ * Specifying an R script file will run Rscript.
+ * Use the -p flag to define the command line argument string to pass to either Rscript or R.
+ * Run 'R-rocker container' to get a singularlity shell.
+ * Run R-rocker rstudio to spin up an rstudio server via slurm sbatch.
+     * -c [number of cores]
+     * -m [memory resource request e.g. 50G]
+     * -t [server walltime e.g. 8:00:00 (8 hours)]
 ```
 
 ### Container image flavours and R versions
@@ -49,7 +53,11 @@ R_version=4.2.2
 
 ### Python
 
-Python is made available by linking a Python Conda environment to the R-rocker container. This is achieved by setting the PATH environment variable in the container to point `python` to the conda version. Reticulate is also configured so Python can be run from within R. You can specific a pre-existing Python Conda environment by setting the `PYTHON_ENV_PATH=[path to python conda environment]` variable in `config.mk`. This defaults the `env/` in the project directory and is created if it does not exist. 
+Python is made available by linking a Python Conda environment to the R-rocker container. This is achieved by setting the PATH environment variable in the container to point `python` to the conda version. Reticulate is also configured so Python can be run from within R. You can specific a pre-existing Python Conda environment by setting the `PYTHON_ENV_PATH=[path to python conda environment]` variable in `config.mk`. This defaults the `env/` in the project directory and is created if it does not exist.
+
+### RStudio
+
+RStudio is made available via RStudio RServer. Details on how the server is setup and configured are below.
 
 ## Details
 
@@ -76,6 +84,14 @@ All configuration options are contained in `config.mk`.
 
 You can make additional file system paths available to the R session by adding them to the `ADDITIONAL_PATHS` variable in the `R-rocker` script.
 `ADDITIONAL_PATHS="/additional/path/one,additiona/path/two"`
+
+### RStudio
+
+An RStudio server can be spun up with the following command. The server is run by the `run_server.sh` script. This script is configured to spin up the server on an HPC node using slurm. Connection details can be found in the slurm output file `rstudio-server.job.xxxxx` once the server job is running. CPU allocation, memory allocation and walltime can be set using the `-c, -m and -t options`.  
+
+```
+./R-rocker rstudio
+```
 
 ### Further reading
 
