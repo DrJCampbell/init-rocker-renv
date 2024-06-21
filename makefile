@@ -27,6 +27,7 @@ R-rocker:
         	mv R-rocker ${RHOME}; \
 		chmod -R 755 renv; \
 		mv *renv* ${RHOME}; \
+                mv env ${RHOME}; \
 		mv ${ROCKER_ALIAS} ${RHOME}; \
 		mv .Rprofile ${RHOME}; \
 		mv .Renviron ${RHOME}; \
@@ -48,7 +49,7 @@ init_renv:
 	--pwd ${BUILD_PATH} \
 	--containall \
 	--cleanenv \
-	./${ROCKER_ALIAS} R -e ".libPaths( \"${R_LIBS_PROJECT}\" );renv::init();renv::restore();q( save = \"no\")"
+	./${ROCKER_ALIAS} R -e ".libPaths( \"${R_LIBS_PROJECT}\" );renv::init();q( save = \"no\")"
 	#echo "setwd( Sys.getenv( \"BABS_PROJECT_HOME\" ) )" >> .Rprofile
 
 .PHONY: install_renv
