@@ -6,7 +6,7 @@ This repo contains a make file and associated scripts and documentation to setup
 
 1. Clone repository
 2. `cd` to the `init-rocker-renv` directory
-3. Build the R environment
+3. Build the R and jupyter python environment
   + To build the environment in the repo diectory type `make build`
   + To build and delpoy the environment to a different directory type `make build RHOME=[target direcory]`
 
@@ -87,10 +87,18 @@ You can make additional file system paths available to the R session by adding t
 
 ### RStudio
 
-An RStudio server can be spun up with the following command. The server is run by the `run_server.sh` script. This script is configured to spin up the server on an HPC node using slurm. Connection details can be found in the slurm output file `rstudio-server.job.xxxxx` once the server job is running. CPU allocation, memory allocation and walltime can be set using the `-c, -m and -t options`.  
+An RStudio server can be spun up with the following command. The server is run by the `run_rstudio_server.sh` script. This script is configured to spin up the server on an HPC node using slurm. Connection details can be found in the slurm output file `rstudio-server.job.xxxxx` once the server job is running. CPU allocation, memory allocation and walltime can be set using the `-c, -m and -t options`.  
 
 ```
 ./R-rocker rstudio
+```
+
+### Jupyter server
+
+A jupyter server can be spun up in the same way as rstudio (see above) with the following command. The Jupyter server uses the virtual python environment created during the build process. Jupyter is not configured to run R and does not use the rocker container. Python packages can be installed into the virtual environment using the wrapper script `./venv-install.sh [package names]`. 
+
+```
+./R-rocker jupyter
 ```
 
 ### Further reading
