@@ -95,8 +95,8 @@ $(PYTHON_VENV_HOME):
 	$@/bin/python -m pip install -U jupyter
 	$@/bin/python -m pip install -U ipython
 	$@/bin/python -m pip install -U ipykernel
-	$@/bin/ipython kernel install --user --name=$@
-	$@/bin/python -m ipykernel install --user --name=$@
+	$@/bin/ipython kernel install --user --name=${VENV_NAME}
+	$@/bin/python -m ipykernel install --user --name=${VENV_NAME}
 	$@/bin/python -m pip install -U bash_kernel
 	$@/bin/python -m bash_kernel.install
 
