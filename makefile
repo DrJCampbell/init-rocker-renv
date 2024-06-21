@@ -27,7 +27,7 @@ R-rocker:
         	mv R-rocker ${RHOME}; \
 		chmod -R 755 renv; \
 		mv *renv* ${RHOME}; \
-                mv env ${RHOME}; \
+		mv env ${RHOME}; \
 		mv venv ${RHOME}; \
 		mv venv-install.sh ${RHOME}; \
 		mv ${ROCKER_ALIAS} ${RHOME}; \
