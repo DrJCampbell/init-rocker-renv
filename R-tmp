@@ -74,7 +74,13 @@ elif [[ $1 == "rstudio" ]]; then
     		-c ${RSERVER_CORES} -n 1 \
     		--time=${RSERVER_TIME} \
     		--mem=${RSERVER_MEM} \
-    		./run_server.sh
+    		./run_rstudio_server.sh
+elif [[ $1 == "jupyter" ]]; then
+    sbatch \
+	     	-c ${RSERVER_CORES} -n 1 \
+		--time=${RSERVER_TIME} \
+		--mem=${RSERVER_MEM} \
+		./run_jupyter_server.sh
 elif [[ $1 == "container" ]]; then
     singularity shell \
 		--bind ${MOUNTS} \
