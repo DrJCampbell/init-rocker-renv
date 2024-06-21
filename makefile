@@ -31,6 +31,7 @@ R-rocker:
 		mv ${ROCKER_ALIAS} ${RHOME}; \
 		mv .Rprofile ${RHOME}; \
 		mv .Renviron ${RHOME}; \
+                mv run_* ${RHOME}; \
 		#@echo "removing ${BUILD_PATH}"; \
 		#rm -rfI ${BUILD_PATH}; \
 	fi
