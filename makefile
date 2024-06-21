@@ -8,6 +8,8 @@ ifndef RHOME
 endif
 
 RHOME_FULL=$(shell readlink -f ${RHOME})
+PYTHON_ENV_HOME=${RHOME_FULL}/${PYTHON_ENV_NAME}
+PYTHON_VENV_HOME=${RHOME_FULL}/${PYTHON_VENV_NAME}
 rocker_image_uri=docker://rocker/${rocker_image}:${R_version}
 rocker_image_file=${rocker_image}_${R_version}.sif
 BUILD_PATH=$(shell readlink -f ${PWD})
@@ -27,8 +29,6 @@ R-rocker:
         	mv R-rocker ${RHOME}; \
 		chmod -R 755 renv; \
 		mv *renv* ${RHOME}; \
-		mv env ${RHOME}; \
-		mv venv ${RHOME}; \
 		mv venv-install.sh ${RHOME}; \
 		mv ${ROCKER_ALIAS} ${RHOME}; \
 		mv .Rprofile ${RHOME}; \
