@@ -111,4 +111,40 @@ A jupyter server can be spun up in the same way as rstudio (see above) with the 
 * [Customising R-rocker containers](https://cloud.sylabs.io/dashboard)
 
 
+## James' notes on specific scRNA-Seq packages
+
+1. After installation (github readme), start R in a terminal using ./R-rocker or start Rstudio using ./R-rocker rstudio
+
+2. You may have to use setwd() to set the working directory to the path starting with /nemo - This happened to me using rstudio.
+
+eg setwd("/nemo/stp/babs/working/campbej/init-rocker-renv/")
+
+Then use the menus 'Session' > 'Restart R'
+
+3. If you have trouble installing monocle3, try doing it in the terminal version
+
+I installed the Bioconductor dependencies first:
+
+	renv::install('bioc::BiocGenerics')
+	renv::install('bioc::DelayedArray')
+	renv::install('bioc::DelayedMatrixStats',)
+	renv::install('bioc::limma')
+	renv::install('bioc::lme4')
+	renv::install('bioc::S4Vectors')
+	renv::install('bioc::SingleCellExperiment',)
+	renv::install('bioc::SummarizedExperiment')
+	renv::install('bioc::batchelor')
+	renv::install('bioc::HDF5Array',)
+	renv::install('bioc::terra')
+	renv::install('bioc::ggrastr')
+
+Then used wget to download the archived tar.gz source for leidenbase from https://cran.r-project.org/src/contrib/Archive/leidenbase/leidenbase_0.1.30.tar.gz
+
+Then installed from source using:
+	renv::install('leidenbase_0.1.30.tar.gz')
+
+
+
+
+
 
